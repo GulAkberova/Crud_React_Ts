@@ -25,9 +25,14 @@ function Login() {
   return (
     <div>
 
-        <input type={'text'} placeholder='name'name='name' onChange={handleChange}/>
+   <div className='login_bigdiv'>
+  <div className='login_div'>
+    <h2>Login</h2>
+  <input type={'text'} placeholder='name'name='name' onChange={handleChange}/>
         <input type={'password'} placeholder='password' name='password' onChange={handleChange}/>
-        <button onClick={handleAdd}>LOgin</button>
+        <button onClick={handleAdd}>Login</button>
+  </div>
+   </div>
     </div>
   )
 }

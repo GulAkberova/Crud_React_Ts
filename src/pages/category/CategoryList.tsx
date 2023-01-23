@@ -14,9 +14,11 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { crudContext } from "../../context/crudContext";
 import { useNavigate } from "react-router-dom";
+import { Category } from "../../models/category/Category";
+import { CategoryService } from "../../network/category/CategoryService";
 
 
-function ProductList() {
+function CategoryList() {
     const { loggedIn } = useContext(crudContext);
     const navigate = useNavigate();
   const style = {
@@ -32,14 +34,14 @@ function ProductList() {
   };
 
 
-  const [products, setProducts] = useState<Product[]>([]);
+  const [category, setCategory] = useState<Category[]>([]);
 
 
   useEffect(() => {
-    let productService = new ProductService();
+    let categoryService = new CategoryService();
 
-    productService.getAll().then((res) => {
-      setProducts(res.data);
+    categoryService.getAll().then((res) => {
+        setCategory(res.data);
     });
   }, []);
 
@@ -52,10 +54,8 @@ function ProductList() {
   const handleClose1 = () => setOpen(false);
 
 const [name, setName]=useState('')
-const [unitPrice, setUnitPrice]=useState((''))
-console.log(typeof(unitPrice));
+const [description, setDes]=useState('')
 
-const [unitsInStock, setUnitsInStock]=useState((''))
 
 
   const handleAdd=()=>{
@@ -65,14 +65,13 @@ const [unitsInStock, setUnitsInStock]=useState((''))
         return;
     }
   
-    let productService = new ProductService();
-    let newValueProduct : Product={
+    let categoryService = new CategoryService();
+    let newValueProduct : Category={
         name: name,
-        unitPrice: unitPrice,
-        unitsInStock: unitsInStock
+        description:description
        
     }
-    productService.getAdd(newValueProduct)
+    categoryService.getAdd(newValueProduct)
 
   }
  
@@ -82,12 +81,12 @@ const [unitsInStock, setUnitsInStock]=useState((''))
         navigate("/login");
         return;
     }
-    let productService = new ProductService();
-    let it : Product=item.id
-    productService.getDelete(it)
+    let categoryService = new CategoryService();
+    let it : Category=item.id
+    categoryService.getDelete(it)
     
-    productService.getAll().then((res) => {
-        setProducts(res.data);
+    categoryService.getAll().then((res) => {
+        setCategory(res.data);
       });
 
 
@@ -108,8 +107,7 @@ const handleUpdate=()=>{
             <TableRow>
               <TableCell>Id</TableCell>
               <TableCell>Name</TableCell>
-              <TableCell align="right">UnitPrice</TableCell>
-              <TableCell align="right">UnitStock</TableCell>
+              <TableCell align="right">Descriptions</TableCell>
             
               <TableCell align="right">Update</TableCell>
               <TableCell align="right">Delete</TableCell>
@@ -119,7 +117,7 @@ const handleUpdate=()=>{
             </TableRow>
           </TableHead>
           <TableBody>
-            {products.map((i) => (
+            {category.map((i) => (
               <TableRow
                 key={i.id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -130,8 +128,7 @@ const handleUpdate=()=>{
                 <TableCell component="th" scope="row">
                   {i.name}
                 </TableCell>
-                <TableCell align="right">{i.unitPrice}</TableCell>
-                <TableCell align="right">{i.unitsInStock}</TableCell>
+                <TableCell align="right">{i.description}</TableCell>
               
                 <TableCell align="right">
                   <button onClick={handleOpen1}>Update</button>
@@ -166,15 +163,10 @@ const handleUpdate=()=>{
               placeholder="UnitPrice"
               name="unitPrice"
               type={'number'}
-              onChange={(e) => setUnitPrice(e.target.value)}
+              onChange={(e) => setDes(e.target.value)}
 
             />
-            <input
-              placeholder="UnitStock"
-              name="unitStock"
-              onChange={(e) => setUnitsInStock(e.target.value)}
-
-            />
+           
             <button onClick={(handleAdd)}>Add</button>
           </Typography>
         </Box>
@@ -202,15 +194,10 @@ const handleUpdate=()=>{
               placeholder="UnitPrice"
               name="unitPrice"
               type={'number'}
-              onChange={(e) => setUnitPrice(e.target.value)}
+              onChange={(e) => setDes(e.target.value)}
 
             />
-            <input
-              placeholder="UnitStock"
-              name="unitStock"
-              onChange={(e) => setUnitsInStock(e.target.value)}
-
-            />
+           
             <button onClick={(handleAdd)}>Add</button>
           </Typography>
         </Box>
@@ -219,4 +206,4 @@ const handleUpdate=()=>{
   );
 }
 
-export default ProductList;
+export default CategoryList;

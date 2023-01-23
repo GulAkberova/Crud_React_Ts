@@ -93,13 +93,14 @@ function Header() {
                   <Typography textAlign="center"><NavLink to={'/'}>Home</NavLink></Typography>
                 </MenuItem>
                 <MenuItem  onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center"><NavLink to={'/'}>Products</NavLink></Typography>
+                  <Typography textAlign="center"><NavLink to={'/products'}>Products</NavLink></Typography>
+                </MenuItem>
+             
+                <MenuItem  onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center"><NavLink to={'/category'}>Category</NavLink></Typography>
                 </MenuItem>
                 <MenuItem  onClick={handleCloseNavMenu}>
                   <Typography textAlign="center"><NavLink to={'/'}>Suppliers</NavLink></Typography>
-                </MenuItem>
-                <MenuItem  onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center"><NavLink to={'/'}>Orders</NavLink></Typography>
                 </MenuItem>
             </Menu>
           </Box>
@@ -140,13 +141,13 @@ function Header() {
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-              Suppliers
+                <NavLink to={'/category'}>Category</NavLink>
               </Button>
               <Button
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-             Orders
+             <NavLink to={'/category'}>Suppliers</NavLink>
               </Button>
               <Button
                 onClick={handleCloseNavMenu}

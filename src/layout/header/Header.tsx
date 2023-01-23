@@ -100,7 +100,7 @@ function Header() {
                   <Typography textAlign="center"><NavLink to={'/category'}>Category</NavLink></Typography>
                 </MenuItem>
                 <MenuItem  onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center"><NavLink to={'/'}>Suppliers</NavLink></Typography>
+                  <Typography textAlign="center"><NavLink to={'/supplier'}>Suppliers</NavLink></Typography>
                 </MenuItem>
             </Menu>
           </Box>
@@ -147,7 +147,7 @@ function Header() {
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-             <NavLink to={'/category'}>Suppliers</NavLink>
+             <NavLink to={'/supplier'}>Suppliers</NavLink>
               </Button>
               <Button
                 onClick={handleCloseNavMenu}

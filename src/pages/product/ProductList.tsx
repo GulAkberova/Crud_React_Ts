@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Product } from "../../models/product/Product";
 import { ProductService } from "../../network/product/ProductService";
 import Table from "@mui/material/Table";
@@ -12,8 +12,13 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
+import { crudContext } from "../../context/crudContext";
+import { useNavigate } from "react-router-dom";
+
 
 function ProductList() {
+    const { loggedIn } = useContext(crudContext);
+    const navigate = useNavigate();
   const style = {
     position: "absolute" as "absolute",
     top: "50%",
@@ -42,12 +47,19 @@ function ProductList() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const [open1, setOpen1] = React.useState(false);
+  const handleOpen1 = () => setOpen(true);
+  const handleClose1 = () => setOpen(false);
+
 const [name, setName]=useState('')
 const [unitPrice, setUnitPrice]=useState((''))
 console.log(typeof(unitPrice));
 
 const [unitsInStock, setUnitsInStock]=useState((''))
+
+
   const handleAdd=()=>{
+  
     let productService = new ProductService();
     let newValueProduct : Product={
         name: name,
@@ -63,6 +75,11 @@ const [unitsInStock, setUnitsInStock]=useState((''))
   }
  
   const handleDelete=(item:any)=>{
+    if (!loggedIn) {
+        alert("Please login before making changes");
+        navigate("/login");
+        return;
+    }
     let productService = new ProductService();
     let it : Product=item.id
     productService.getDelete(it)
@@ -74,21 +91,11 @@ const [unitsInStock, setUnitsInStock]=useState((''))
 
   }
 
-useEffect(()=>{
-   let a= localStorage.setItem('sf',JSON.stringify(products))
-   localStorage.getItem
-   
-})
-const getLocalItems=()=>{
-    let ls=localStorage.getItem('sf')
-    console.log('aaaaaaaaa',ls);
 
-    // if(ls){
-    //     return JSON.parse(localStorage.getItem('sf':string):void)
-    // }else{
-    //     return []
-    // }
-    
+
+
+const handleUpdate=()=>{
+
 }
 
   return (
@@ -124,7 +131,7 @@ const getLocalItems=()=>{
                   <button onClick={handleOpen}>Add</button>
                 </TableCell>
                 <TableCell align="right">
-                  <button>Update</button>
+                  <button onClick={handleOpen1}>Update</button>
                 </TableCell>
                 <TableCell align="right">
                   <button onClick={()=>handleDelete(i)}>Delete</button>
@@ -138,6 +145,42 @@ const getLocalItems=()=>{
       <Modal
         open={open}
         onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Text in a modal
+          </Typography>
+
+          <Typography>
+            <input
+              placeholder="Name"
+              name="name"
+              onChange={(e) => setName(e.target.value)}
+            />
+            <input
+              placeholder="UnitPrice"
+              name="unitPrice"
+              type={'number'}
+              onChange={(e) => setUnitPrice(e.target.value)}
+
+            />
+            <input
+              placeholder="UnitStock"
+              name="unitStock"
+              onChange={(e) => setUnitsInStock(e.target.value)}
+
+            />
+            <button onClick={(handleAdd)}>Add</button>
+          </Typography>
+        </Box>
+      </Modal>
+
+
+      <Modal
+        open={open1}
+        onClose={handleClose1}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >

@@ -148,6 +148,12 @@ function Header() {
               >
              Orders
               </Button>
+              <Button
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+              >
+             <NavLink to={'/login'}>login</NavLink>
+              </Button>
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>

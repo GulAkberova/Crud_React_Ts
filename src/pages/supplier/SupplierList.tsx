@@ -19,10 +19,9 @@ import { CategoryService } from "../../network/category/CategoryService";
 import { Supplier } from "../../models/supplier/Supplier";
 import { SupplierService } from "../../network/supplier/Supplier";
 
-
 function SupplierList() {
-    const { loggedIn } = useContext(crudContext);
-    const navigate = useNavigate();
+  const { loggedIn } = useContext(crudContext);
+  const navigate = useNavigate();
   const style = {
     position: "absolute" as "absolute",
     top: "50%",
@@ -35,15 +34,13 @@ function SupplierList() {
     p: 4,
   };
 
-
   const [supplier, setSupplier] = useState<Supplier[]>([]);
-
 
   useEffect(() => {
     let supplierService = new SupplierService();
 
     supplierService.getAll().then((res) => {
-        setSupplier(res.data);
+      setSupplier(res.data);
     });
   }, []);
 
@@ -55,53 +52,45 @@ function SupplierList() {
   const handleOpen1 = () => setOpen(true);
   const handleClose1 = () => setOpen(false);
 
-const [name1, setName1]=useState('')
-const [name2, setName2]=useState('')
-const [name3, setName3]=useState('')
+  const [name1, setName1] = useState("");
+  const [name2, setName2] = useState("");
+  const [name3, setName3] = useState("");
 
-
-
-  const handleAdd=()=>{
+  const handleAdd = () => {
     if (!loggedIn) {
-        alert("Please login before making changes");
-        navigate("/login");
-        return;
+      alert("Please login before making changes");
+      navigate("/login");
+      return;
     }
-  
-    let supplierService = new SupplierService();
-    let newValueProduct : Supplier={
-        companyName: name1,
-        contactName:name2,
-        contactTitle:name3
-       
-    }
-    supplierService.getAdd(newValueProduct)
 
-  }
- 
-  const handleDelete=(item:any)=>{
-    if (!loggedIn) {
-        alert("Please login before making changes");
-        navigate("/login");
-        return;
-    }
     let supplierService = new SupplierService();
-    let it : Supplier=item.id
-    supplierService.getDelete(it)
-    
+    let newValueProduct: Supplier = {
+      companyName: name1,
+      contactName: name2,
+      contactTitle: name3,
+    };
+    supplierService.getAdd(newValueProduct);
     supplierService.getAll().then((res) => {
-        setSupplier(res.data);
-      });
+      setSupplier(res.data);
+    });
+  };
 
+  const handleDelete = (item: any) => {
+    if (!loggedIn) {
+      alert("Please login before making changes");
+      navigate("/login");
+      return;
+    }
+    let supplierService = new SupplierService();
+    let it: Supplier = item.id;
+    supplierService.getDelete(it);
 
-  }
+    supplierService.getAll().then((res) => {
+      setSupplier(res.data);
+    });
+  };
 
-
-
-
-const handleUpdate=()=>{
-
-}
+  const handleUpdate = () => {};
 
   return (
     <>
@@ -113,10 +102,10 @@ const handleUpdate=()=>{
               <TableCell>CompanyName</TableCell>
               <TableCell align="right">ContactName</TableCell>
               <TableCell align="right">ContactTitle</TableCell>
-              <TableCell align="right">Update</TableCell>
+              {/* <TableCell align="right">Update</TableCell> */}
               <TableCell align="right">Delete</TableCell>
               <TableCell align="right">
-              <button onClick={handleOpen}>Add</button>
+                <button onClick={handleOpen}>Add</button>
               </TableCell>
             </TableRow>
           </TableHead>
@@ -134,12 +123,12 @@ const handleUpdate=()=>{
                 </TableCell>
                 <TableCell align="right">{i.contactName}</TableCell>
                 <TableCell align="right">{i.contactTitle}</TableCell>
-              
-                <TableCell align="right">
+
+                {/* <TableCell align="right">
                   <button onClick={handleOpen1}>Update</button>
-                </TableCell>
+                </TableCell> */}
                 <TableCell align="right">
-                  <button onClick={()=>handleDelete(i)}>Delete</button>
+                  <button onClick={() => handleDelete(i)}>Delete</button>
                 </TableCell>
               </TableRow>
             ))}
@@ -164,23 +153,21 @@ const handleUpdate=()=>{
               name="name1"
               onChange={(e) => setName1(e.target.value)}
             />
-               <input
+            <input
               placeholder="Name"
               name="name2"
               onChange={(e) => setName2(e.target.value)}
             />
-               <input
+            <input
               placeholder="Name"
               name="name3"
               onChange={(e) => setName3(e.target.value)}
             />
-          
-           
-            <button onClick={(handleAdd)}>Add</button>
+
+            <button onClick={handleAdd}>Add</button>
           </Typography>
         </Box>
       </Modal>
-
 
       <Modal
         open={open1}
@@ -199,18 +186,18 @@ const handleUpdate=()=>{
               name="name1"
               onChange={(e) => setName1(e.target.value)}
             />
-           <input
+            <input
               placeholder="Name"
               name="name2"
               onChange={(e) => setName2(e.target.value)}
             />
-             <input
+            <input
               placeholder="Name"
               name="name3"
               onChange={(e) => setName3(e.target.value)}
             />
-           
-            <button onClick={(handleAdd)}>Add</button>
+
+            <button onClick={handleAdd}>Add</button>
           </Typography>
         </Box>
       </Modal>

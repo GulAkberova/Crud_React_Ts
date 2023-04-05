@@ -17,10 +17,9 @@ import { useNavigate } from "react-router-dom";
 import { Category } from "../../models/category/Category";
 import { CategoryService } from "../../network/category/CategoryService";
 
-
 function CategoryList() {
-    const { loggedIn } = useContext(crudContext);
-    const navigate = useNavigate();
+  const { loggedIn } = useContext(crudContext);
+  const navigate = useNavigate();
   const style = {
     position: "absolute" as "absolute",
     top: "50%",
@@ -33,15 +32,13 @@ function CategoryList() {
     p: 4,
   };
 
-
   const [category, setCategory] = useState<Category[]>([]);
-
 
   useEffect(() => {
     let categoryService = new CategoryService();
 
     categoryService.getAll().then((res) => {
-        setCategory(res.data);
+      setCategory(res.data);
     });
   }, []);
 
@@ -53,51 +50,43 @@ function CategoryList() {
   const handleOpen1 = () => setOpen(true);
   const handleClose1 = () => setOpen(false);
 
-const [name, setName]=useState('')
-const [description, setDes]=useState('')
+  const [name, setName] = useState("");
+  const [description, setDes] = useState("");
 
-
-
-  const handleAdd=()=>{
+  const handleAdd = () => {
     if (!loggedIn) {
-        alert("Please login before making changes");
-        navigate("/login");
-        return;
+      alert("Please login before making changes");
+      navigate("/login");
+      return;
     }
-  
-    let categoryService = new CategoryService();
-    let newValueProduct : Category={
-        name: name,
-        description:description
-       
-    }
-    categoryService.getAdd(newValueProduct)
 
-  }
- 
-  const handleDelete=(item:any)=>{
-    if (!loggedIn) {
-        alert("Please login before making changes");
-        navigate("/login");
-        return;
-    }
     let categoryService = new CategoryService();
-    let it : Category=item.id
-    categoryService.getDelete(it)
-    
+    let newValueProduct: Category = {
+      name: name,
+      description: description,
+    };
+    categoryService.getAdd(newValueProduct);
     categoryService.getAll().then((res) => {
-        setCategory(res.data);
-      });
+      setCategory(res.data);
+    });
+  };
 
+  const handleDelete = (item: any) => {
+    if (!loggedIn) {
+      alert("Please login before making changes");
+      navigate("/login");
+      return;
+    }
+    let categoryService = new CategoryService();
+    let it: Category = item.id;
+    categoryService.getDelete(it);
 
-  }
+    categoryService.getAll().then((res) => {
+      setCategory(res.data);
+    });
+  };
 
-
-
-
-const handleUpdate=()=>{
-
-}
+  const handleUpdate = () => {};
 
   return (
     <>
@@ -108,11 +97,11 @@ const handleUpdate=()=>{
               <TableCell>Id</TableCell>
               <TableCell>Name</TableCell>
               <TableCell align="right">Descriptions</TableCell>
-            
-              <TableCell align="right">Update</TableCell>
+
+              {/* <TableCell align="right">Update</TableCell> */}
               <TableCell align="right">Delete</TableCell>
               <TableCell align="right">
-              <button onClick={handleOpen}>Add</button>
+                <button onClick={handleOpen}>Add</button>
               </TableCell>
             </TableRow>
           </TableHead>
@@ -129,12 +118,12 @@ const handleUpdate=()=>{
                   {i.name}
                 </TableCell>
                 <TableCell align="right">{i.description}</TableCell>
-              
-                <TableCell align="right">
+
+                {/* <TableCell align="right">
                   <button onClick={handleOpen1}>Update</button>
-                </TableCell>
+                </TableCell> */}
                 <TableCell align="right">
-                  <button onClick={()=>handleDelete(i)}>Delete</button>
+                  <button onClick={() => handleDelete(i)}>Delete</button>
                 </TableCell>
               </TableRow>
             ))}
@@ -162,16 +151,14 @@ const handleUpdate=()=>{
             <input
               placeholder="UnitPrice"
               name="unitPrice"
-              type={'number'}
+              type={"number"}
               onChange={(e) => setDes(e.target.value)}
-
             />
-           
-            <button onClick={(handleAdd)}>Add</button>
+
+            <button onClick={handleAdd}>Add</button>
           </Typography>
         </Box>
       </Modal>
-
 
       <Modal
         open={open1}
@@ -193,12 +180,11 @@ const handleUpdate=()=>{
             <input
               placeholder="UnitPrice"
               name="unitPrice"
-              type={'number'}
+              type={"number"}
               onChange={(e) => setDes(e.target.value)}
-
             />
-           
-            <button onClick={(handleAdd)}>Add</button>
+
+            <button onClick={handleAdd}>Add</button>
           </Typography>
         </Box>
       </Modal>

@@ -15,10 +15,9 @@ import Modal from "@mui/material/Modal";
 import { crudContext } from "../../context/crudContext";
 import { useNavigate } from "react-router-dom";
 
-
 function ProductList() {
-    const { loggedIn } = useContext(crudContext);
-    const navigate = useNavigate();
+  const { loggedIn } = useContext(crudContext);
+  const navigate = useNavigate();
   const style = {
     position: "absolute" as "absolute",
     top: "50%",
@@ -31,9 +30,7 @@ function ProductList() {
     p: 4,
   };
 
-
   const [products, setProducts] = useState<Product[]>([]);
-
 
   useEffect(() => {
     let productService = new ProductService();
@@ -51,54 +48,47 @@ function ProductList() {
   const handleOpen1 = () => setOpen(true);
   const handleClose1 = () => setOpen(false);
 
-const [name, setName]=useState('')
-const [unitPrice, setUnitPrice]=useState((''))
-console.log(typeof(unitPrice));
+  const [name, setName] = useState("");
+  const [unitPrice, setUnitPrice] = useState("");
+  console.log(typeof unitPrice);
 
-const [unitsInStock, setUnitsInStock]=useState((''))
+  const [unitsInStock, setUnitsInStock] = useState("");
 
-
-  const handleAdd=()=>{
+  const handleAdd = () => {
     if (!loggedIn) {
-        alert("Please login before making changes");
-        navigate("/login");
-        return;
+      alert("Please login before making changes");
+      navigate("/login");
+      return;
     }
-  
-    let productService = new ProductService();
-    let newValueProduct : Product={
-        name: name,
-        unitPrice: unitPrice,
-        unitsInStock: unitsInStock
-       
-    }
-    productService.getAdd(newValueProduct)
 
-  }
- 
-  const handleDelete=(item:any)=>{
-    if (!loggedIn) {
-        alert("Please login before making changes");
-        navigate("/login");
-        return;
-    }
     let productService = new ProductService();
-    let it : Product=item.id
-    productService.getDelete(it)
-    
+    let newValueProduct: Product = {
+      name: name,
+      unitPrice: unitPrice,
+      unitsInStock: unitsInStock,
+    };
+    productService.getAdd(newValueProduct);
     productService.getAll().then((res) => {
-        setProducts(res.data);
-      });
+      setProducts(res.data);
+    });
+  };
 
+  const handleDelete = (item: any) => {
+    if (!loggedIn) {
+      alert("Please login before making changes");
+      navigate("/login");
+      return;
+    }
+    let productService = new ProductService();
+    let it: Product = item.id;
+    productService.getDelete(it);
 
-  }
+    productService.getAll().then((res) => {
+      setProducts(res.data);
+    });
+  };
 
-
-
-
-const handleUpdate=()=>{
-
-}
+  const handleUpdate = () => {};
 
   return (
     <>
@@ -110,11 +100,11 @@ const handleUpdate=()=>{
               <TableCell>Name</TableCell>
               <TableCell align="right">UnitPrice</TableCell>
               <TableCell align="right">UnitStock</TableCell>
-            
-              <TableCell align="right">Update</TableCell>
+
+              {/* <TableCell align="right">Update</TableCell> */}
               <TableCell align="right">Delete</TableCell>
               <TableCell align="right">
-              <button onClick={handleOpen}>Add</button>
+                <button onClick={handleOpen}>Add</button>
               </TableCell>
             </TableRow>
           </TableHead>
@@ -132,12 +122,12 @@ const handleUpdate=()=>{
                 </TableCell>
                 <TableCell align="right">{i.unitPrice}</TableCell>
                 <TableCell align="right">{i.unitsInStock}</TableCell>
-              
-                <TableCell align="right">
+
+                {/* <TableCell align="right">
                   <button onClick={handleOpen1}>Update</button>
-                </TableCell>
+                </TableCell> */}
                 <TableCell align="right">
-                  <button onClick={()=>handleDelete(i)}>Delete</button>
+                  <button onClick={() => handleDelete(i)}>Delete</button>
                 </TableCell>
               </TableRow>
             ))}
@@ -165,21 +155,18 @@ const handleUpdate=()=>{
             <input
               placeholder="UnitPrice"
               name="unitPrice"
-              type={'number'}
+              type={"number"}
               onChange={(e) => setUnitPrice(e.target.value)}
-
             />
             <input
               placeholder="UnitStock"
               name="unitStock"
               onChange={(e) => setUnitsInStock(e.target.value)}
-
             />
-            <button onClick={(handleAdd)}>Add</button>
+            <button onClick={handleAdd}>Add</button>
           </Typography>
         </Box>
       </Modal>
-
 
       <Modal
         open={open1}
@@ -201,17 +188,15 @@ const handleUpdate=()=>{
             <input
               placeholder="UnitPrice"
               name="unitPrice"
-              type={'number'}
+              type={"number"}
               onChange={(e) => setUnitPrice(e.target.value)}
-
             />
             <input
               placeholder="UnitStock"
               name="unitStock"
               onChange={(e) => setUnitsInStock(e.target.value)}
-
             />
-            <button onClick={(handleAdd)}>Add</button>
+            <button onClick={handleAdd}>Add</button>
           </Typography>
         </Box>
       </Modal>
